@@ -1,12 +1,21 @@
 {
+  "java.configuration.runtimes": [
+  {
+    "name": "JavaSE-17",
+    "path": "/usr/local/jdk-17"
+  }
+],
   "eslint.enable": true,
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true
+    "source.fixAll.eslint": "explicit"
   },
   "eslint.validate": [
     "javascript",
     "vue",
     "html",
     "typescript"
-  ]
+  ],
+  "java.compile.nullAnalysis.mode": "automatic",
+  "maven.view": "hierarchical",
+  "java.configuration.updateBuildConfiguration": "automatic"
 }

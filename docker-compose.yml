@@ -1,0 +1,45 @@
+# cmp用docker部署的配置
+version: "3.9"
+services:
+  eureka:
+    build:
+      context: .
+      dockerfile: Dockerfile-eureka
+    network_mode: "host"
+    volumes:
+      - /root/.m2/repository:/root/.m2/repository
+      - /opt/cloudexplorer:/opt/cloudexplorer
+  mc:
+    build:
+      context: .
+      dockerfile: Dockerfile-mc
+    network_mode: "host"
+    volumes:
+      - /root/.m2/repository:/root/.m2/repository
+      - /opt/cloudexplorer:/opt/cloudexplorer
+  mariadb:
+    # container_name: mariadb
+    image: mariadb:10.8.2
+    volumes:
+      - ./config/mariadb/my.cnf:/etc/mysql/my.cnf
+    environment:
+      MARIADB_ROOT_PASSWORD: password
+    network_mode: "host"
+  rabbitmq:
+    # container_name: rabbitmq
+    image: rabbitmq:management-alpine
+    network_mode: "host"
+  redis:
+    # container_name: redis
+    image: redis:latest
+    command: redis-server /usr/local/etc/redis/redis.conf
+    network_mode: "host"
+    volumes:
+      - ./config/redis/redis.conf:/usr/local/etc/redis/redis.conf
+  
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.17.26
+    network_mode: "host"
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
