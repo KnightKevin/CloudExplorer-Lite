@@ -1,5 +1,5 @@
 FROM eclipse-temurin:17-jdk
-ADD ./target/management-center-main.jar app.jar
+ADD ./target/vm-service-main.jar app.jar
 
 # 修改容器内的时区
 RUN /bin/cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && echo "Asia/Shanghai" > /etc/timezone

@@ -2,7 +2,7 @@
   "java.configuration.runtimes": [
   {
     "name": "JavaSE-17",
-    "path": "/usr/local/jdk-17"
+    "path": "/usr/local/jdk-17.0.16"
   }
 ],
   "eslint.enable": true,

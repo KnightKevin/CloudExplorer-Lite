@@ -17,6 +17,38 @@ services:
     volumes:
       - /root/.m2/repository:/root/.m2/repository
       - /opt/cloudexplorer:/opt/cloudexplorer
+    # environment:
+    #   - JAVA_OPTS=-Djdk.internal.platform.cgroupfs.disabled=true
+
+  
+  gateway:
+    build:
+      context: .
+      dockerfile: Dockerfile-gateway
+    network_mode: "host"
+    volumes:
+      - /root/.m2/repository:/root/.m2/repository
+      - /opt/cloudexplorer:/opt/cloudexplorer
+
+  vm:
+    build:
+      context: .
+      dockerfile: Dockerfile-vm
+    network_mode: "host"
+    volumes:
+      - /root/.m2/repository:/root/.m2/repository
+      - /opt/cloudexplorer:/opt/cloudexplorer
+
+
+  nginx:
+    image: nginx:latest
+    network_mode: "host"
+    volumes:
+      - ./config/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./framework/sdk/frontend/dist:/etc/nginx/www/base
+      - ./services/vm-service/frontend/dist:/etc/nginx/www/vm
+
+  
   mariadb:
     # container_name: mariadb
     image: mariadb:10.8.2

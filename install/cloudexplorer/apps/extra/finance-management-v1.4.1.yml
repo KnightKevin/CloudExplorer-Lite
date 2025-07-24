@@ -1,0 +1,5 @@
+name: finance-management
+version: v1.4.1
+port: 9012
+display_name: 云账单服务
+icon: icon_bill_outlined

@@ -1,0 +1,12 @@
+cluster.name: ${CE_ELASTICSEARCH_CLUSTER_NAME}
+node.name: ${CE_ELASTICSEARCH_NODE_NAME}
+discovery.type: single-node
+#discovery.seed_hosts: ${CE_ELASTICSEARCH_NODE_NAME}
+#cluster.initial_master_nodes: ${CE_ELASTICSEARCH_NODE_NAME}
+bootstrap.memory_lock: false
+network.host: 0.0.0.0
+http.cors.enabled: true
+http.cors.allow-origin: "*"
+http.cors.allow-methods: "GET"
+xpack.security.enabled: false
+#http.cors.allow-headers: Authorization

@@ -1,0 +1,17 @@
+version: "3.9"
+services:
+
+  redis:
+    container_name: redis
+    hostname: redis
+    image: ${CE_IMAGE_REPOSITORY}redis:${CE_REDIS_VERSION}
+    command: redis-server --requirepass ${CE_REDIS_PASSWORD}
+    ports:
+      - "${CE_REDIS_PORT}:6379"
+    networks:
+      - ce-network
+    deploy:
+      resources:
+        limits:
+          memory: ${CE_REDIS_MEMORY_LIMIT:-1G}
+

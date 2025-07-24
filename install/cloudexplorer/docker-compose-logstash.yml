@@ -1,0 +1,26 @@
+version: "3.9"
+services:
+
+  logstash:
+    container_name: logstash
+    hostname: logstash
+    image: ${CE_IMAGE_REPOSITORY}logstash:${CE_LOGSTASH_VERSION}
+    ports:
+      - "5044:5044"
+      - "9600:9600"
+    volumes:
+      - /${CE_BASE}/cloudexplorer/conf/elk/logstash.yml:/usr/share/logstash/config/logstash.yml:rw
+      - /${CE_BASE}/cloudexplorer/conf/elk/logstash.conf:/usr/share/logstash/pipeline/logstash.conf:rw
+      - /${CE_BASE}/cloudexplorer/logs/:/opt/cloudexplorer/logs:rw
+    env_file:
+      - ${CE_BASE}/cloudexplorer/.env
+    environment:
+      TZ: Asia/Shanghai
+    restart: always
+    networks:
+      - ce-network
+    deploy:
+      resources:
+        limits:
+          memory: ${CE_LOGSTASH_MEMORY_LIMIT:-2G}
+

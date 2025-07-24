@@ -1,0 +1,43 @@
+#!/bin/bash
+# chkconfig: 2345 10 90
+# description: CloudExplorer Lite service
+
+function startCELite
+{
+    cectl reload
+}
+
+function stopCELite
+{
+    cectl uninstall
+}
+
+function restartCELite
+{
+    stopCELite
+    startCELite
+}
+
+function statusCELite
+{
+    cectl status
+}
+
+export HOSTNAME=$HOSTNAME
+case "$1" in
+        start)
+                startCELite
+                ;;
+        stop)
+                stopCELite
+                ;;
+        restart)
+                restartCELite
+                ;;
+        status)
+                statusCELite
+                ;;
+        *)
+                echo "Usage: $0 {start|stop|restart|status}"
+                ;;
+esac

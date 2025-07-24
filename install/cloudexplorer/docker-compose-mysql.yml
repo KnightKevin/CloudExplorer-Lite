@@ -1,0 +1,29 @@
+version: "3.9"
+services:
+
+  mysql:
+    container_name: mysql
+    hostname: mysql
+    image: ${CE_IMAGE_REPOSITORY}mysql:${CE_MYSQL_VERSION}
+    ports:
+      - "${CE_MYSQL_PORT}:3306"
+    volumes:
+      - /tmp:/tmp 
+      - /${CE_BASE}/cloudexplorer/mysql/data:/var/lib/mysql
+      - /${CE_BASE}/cloudexplorer/mysql/log:/var/log/mysql
+      - /${CE_BASE}/cloudexplorer/conf/mysql/my.cnf:/etc/my.cnf
+      - /${CE_BASE}/cloudexplorer/conf/mysql/init/:/docker-entrypoint-initdb.d/
+    environment:
+      MYSQL_ROOT_PASSWORD: ${CE_MYSQL_PASSWORD}
+    healthcheck:
+      test: mysqladmin ping -h 127.0.0.1 -uroot -p$$MYSQL_ROOT_PASSWORD
+      interval: 10s
+      timeout: 10s
+      retries: 120
+    networks:
+      - ce-network
+    deploy:
+      resources:
+        limits:
+          memory: ${CE_MYSQL_MEMORY_LIMIT:-2G}
+

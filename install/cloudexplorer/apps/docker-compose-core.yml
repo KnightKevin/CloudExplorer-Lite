@@ -1,0 +1,31 @@
+version: "3.9"
+services:
+  cloudexplorer:
+    image: ${CE_IMAGE_REPOSITORY}cloudexplorer-core:v1.4.1
+    hostname: cloudexplorer
+    container_name: cloudexplorer
+    ports:
+      - "${CE_PORT}:9000"
+#    environment:
+#      eureka.instance.hostname: eureka
+    env_file:
+      - ${CE_BASE}/cloudexplorer/.env
+#health_check_mysql
+    healthcheck:
+      test: ["CMD", "curl", "-f", "127.0.0.1:9000"]
+      interval: 15s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - ${CE_BASE}/cloudexplorer/logs:/opt/cloudexplorer/logs
+      - ${CE_BASE}/cloudexplorer/conf:/opt/cloudexplorer/conf
+      - ${CE_BASE}/cloudexplorer/apps/extra:/opt/cloudexplorer/apps/extra
+      - ${CE_BASE}/cloudexplorer/downloads:/opt/cloudexplorer/downloads
+      - ${CE_BASE}/cloudexplorer/data:/opt/cloudexplorer/data
+    networks:
+      - ce-network
+    deploy:
+      resources:
+        limits:
+          memory: ${CE_CORE_MEMORY_LIMIT:-8G}
+

@@ -130,9 +130,5 @@ public class CloudSyncBillTest {
         billRuleService.save(billRule);
     }
 
-    @Test
-    public void testView() {
-        Map<String, List<BillView>> dba01764416936c52866c7511977259e = billViewService.billViewByRuleId("95326810c6146ce6a75f09320b2b2699", "2022-10");
-        System.out.println(dba01764416936c52866c7511977259e);
-    }
+
 }

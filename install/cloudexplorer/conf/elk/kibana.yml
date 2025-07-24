@@ -1,0 +1,4 @@
+server.host: "0.0.0.0"
+server.shutdownTimeout: "5s"
+elasticsearch.hosts: [ "${CE_KIBANA_ELASTICSEARCH_HOST}" ]
+csp.strict: false

@@ -1,0 +1,38 @@
+version: "3.9"
+services:
+
+  kibana:
+    container_name: kibana
+    hostname: kibana
+    image: ${CE_IMAGE_REPOSITORY}kibana:${CE_KIBANA_VERSION}
+    ports:
+        - "${CE_KIBANA_PORT}:5601"
+    volumes:
+      - ${CE_BASE}/cloudexplorer/conf/elk/kibana.yml:/usr/share/kibana/config/kibana.yml
+      - /etc/localtime:/etc/localtime:ro
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+    env_file:
+      - ${CE_BASE}/cloudexplorer/.env
+    environment:
+      - SERVERNAME=kibana
+      - ELASTICSEARCH_HOSTS=${CE_KIBANA_ELASTICSEARCH_HOST}
+      - SET_CONTAINER_TIMEZONE=true
+      - CONTAINER_TIMEZONE=Asia/Shanghai
+    healthcheck:
+      test:
+        ["CMD", "curl", "-f", "localhost:5601"]
+#        [
+#          "CMD-SHELL",
+#          "curl -s -I http://localhost:5601 | grep -q 'HTTP/1.1 200'",
+#        ]
+      interval: 10s
+      timeout: 10s
+      retries: 120
+    networks:
+      - ce-network
+    deploy:
+      resources:
+        limits:
+          memory: ${CE_KIBANA_MEMORY_LIMIT:-1G}

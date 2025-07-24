@@ -20,18 +20,21 @@ spring:
   flyway:
     enabled: true
     table: db_ce_version
+  # autoconfigure:
+  #   exclude:
+  #     - org.springframework.boot.actuate.autoconfigure.metrics.SystemMetricsAutoConfiguration
 
 server:
   port: @service.port@
   servlet:
     context-path: /${spring.application.name}
 #监控，访问路径 {ip}:{port}/actuator
-management:
-  server:
-    port: @service.management.port@
-  health:
-    elasticsearch:
-      enabled: false
+# management:
+#   server:
+#     port: @service.management.port@
+#   health:
+#     elasticsearch:
+#       enabled: false
 
 logging:
   file:

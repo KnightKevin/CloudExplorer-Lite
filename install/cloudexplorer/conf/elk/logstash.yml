@@ -1,0 +1,5 @@
+pipeline.batch.size: 1000
+pipeline.workers: 4
+pipeline.batch.delay: 10
+http.host: "0.0.0.0"
+xpack.monitoring.elasticsearch.hosts: [ "${CE_KIBANA_ELASTICSEARCH_HOST}" ]

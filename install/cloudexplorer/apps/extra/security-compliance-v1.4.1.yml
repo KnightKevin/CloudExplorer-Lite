@@ -1,0 +1,5 @@
+name: security-compliance
+version: v1.4.1
+port: 9013
+display_name: 安全合规
+icon: icon_shield_outlined

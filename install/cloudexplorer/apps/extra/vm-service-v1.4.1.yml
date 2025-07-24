@@ -1,0 +1,5 @@
+name: vm-service
+version: v1.4.1
+port: 9011
+display_name: 云主机管理
+icon: icon_ecs_outlined

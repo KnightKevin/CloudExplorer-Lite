@@ -1,0 +1,5 @@
+name: operation-analysis
+version: v1.4.1
+port: 9014
+display_name: 运营分析
+icon: icon_operation-analysis_outlined

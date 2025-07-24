@@ -1,0 +1,44 @@
+version: "3.9"
+services:
+
+  elasticsearch:
+    container_name: elasticsearch
+    hostname: elasticsearch
+    image: ${CE_IMAGE_REPOSITORY}elasticsearch:${CE_ELASTICSEARCH_VERSION}
+    ports:
+        - "${CE_ELASTICSEARCH_PORT}:9200"
+    volumes:
+      - ${CE_BASE}/cloudexplorer/conf/elk/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+      - ${CE_BASE}/cloudexplorer/conf/elk/elasticsearch-jvm.options:/usr/share/elasticsearch/config/jvm.options.d/jvm.options
+      - ${CE_BASE}/localtime:/etc/localtime:ro
+      - ${CE_BASE}/cloudexplorer/elk/data:/usr/share/elasticsearch/data
+    env_file:
+      - ${CE_BASE}/cloudexplorer/.env
+    environment:
+      - SET_CONTAINER_TIMEZONE=true
+      - CONTAINER_TIMEZONE=Asia/Shanghai
+#    mem_limit: ${CE_ELASTICSEARCH_MEM_LIMIT}
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    healthcheck:
+      test:
+        ["CMD", "curl", "-f", "localhost:9200"]
+#        [
+#          "CMD-SHELL",
+#          "curl -s --cacert config/certs/ca/ca.crt https://localhost:9200 | grep -q 'missing authentication credentials'",
+#        ]
+      interval: 10s
+      timeout: 10s
+      retries: 120
+    restart: always
+    networks:
+      - ce-network
+    deploy:
+      resources:
+        limits:
+          memory: ${CE_ELASTICSEARCH_MEMORY_LIMIT:-8G}
+
+      #chmod g+rwx data
+      #chgrp 0 data
